@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Gerenciador TDAH</title>
+<style>
+  body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+  input, button { margin: 5px; padding: 8px; }
+  .tarefa { margin: 10px 0; padding: 10px; background: #fff; border-left: 5px solid #4CAF50; }
+</style>
+</head>
+<body>
+<h2>🧠 Gerenciador de Tarefas para TDAH</h2>
+<input type="text" id="nome" placeholder="Nome da tarefa">
+<input type="date" id="prazo">
+<button onclick="adicionarTarefa()">Adicionar</button>
+<div id="lista"></div>
+
+<script>
+  const tarefas = [];
+
+  function adicionarTarefa() {
+    const nome = document.getElementById("nome").value;
+    const prazo = document.getElementById("prazo").value;
+    if (nome && prazo) {
+      tarefas.push({ nome, prazo, concluida: false });
+      document.getElementById("nome").value = "";
+      document.getElementById("prazo").value = "";
+      atualizarLista();
+    }
+  }
+
+  function concluirTarefa(index) {
+    tarefas[index].concluida = true;
+    alert("🎉 Parabéns por concluir a tarefa!");
+    atualizarLista();
+  }
+
+  function atualizarLista() {
+    const lista = document.getElementById("lista");
+    lista.innerHTML = "";
+    tarefas.forEach((t, i) => {
+      if (!t.concluida) {
+        lista.innerHTML += `<div class="tarefa">
+          <strong>${t.nome}</strong> - Prazo: ${t.prazo}
+          <button onclick="concluirTarefa(${i})">Concluir</button>
+        </div>`;
+      }
+    });
+  }
+</script>
+</body>
+</html>
